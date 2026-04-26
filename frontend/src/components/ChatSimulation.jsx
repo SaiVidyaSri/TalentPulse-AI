@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Bot, User, Loader2 } from 'lucide-react';
 import axios from 'axios';
+import { buildApiUrl } from '../utils/api';
 
 export default function ChatSimulation({ candidate, campaignId, onComplete }) {
   const [messages, setMessages] = useState([]);
@@ -24,7 +25,7 @@ export default function ChatSimulation({ candidate, campaignId, onComplete }) {
       setIsInitializing(true);
       setMessages([]);
       try {
-        const res = await axios.post('http://localhost:5000/api/start-chat', { candidateId: candidate._id, campaignId });
+        const res = await axios.post(buildApiUrl('/start-chat'), { candidateId: candidate._id, campaignId });
         const history = res.data.chatHistory || [];
         setMessages(history);
         
@@ -62,7 +63,7 @@ export default function ChatSimulation({ candidate, campaignId, onComplete }) {
     setIsTyping(true);
 
     try {
-      const res = await axios.post('http://localhost:5000/api/simulate-engagement', {
+      const res = await axios.post(buildApiUrl('/simulate-engagement'), {
         candidateId: candidate._id,
         campaignId,
         messages: tempMessages // send history + new msg so backend can just append

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import { Award, CheckCircle, Download, TrendingUp } from 'lucide-react';
 import axios from 'axios';
+import { buildApiUrl } from '../utils/api';
 
 function ScoreTooltip({ active, payload }) {
   if (!active || !payload || !payload.length) return null;
@@ -31,7 +32,7 @@ export default function ExecutiveShortlist() {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/campaigns/${campaignId}/results`);
+        const res = await axios.get(buildApiUrl(`/campaigns/${campaignId}/results`));
         setCandidates(res.data.candidates);
         setCampaignDetails(res.data.campaignDetails);
       } catch (error) {
@@ -77,7 +78,7 @@ export default function ExecutiveShortlist() {
     try {
       setIsExporting(true);
       const scope = 'all';
-      const response = await axios.get(`http://localhost:5000/api/campaigns/${campaignId}/export-excel?scope=${scope}&top=${finalizedCount}`, {
+      const response = await axios.get(buildApiUrl(`/campaigns/${campaignId}/export-excel?scope=${scope}&top=${finalizedCount}`), {
         responseType: 'blob'
       });
 

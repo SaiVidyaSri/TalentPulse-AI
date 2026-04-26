@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight, Check } from 'lucide-react';
 import axios from 'axios';
+import { buildApiUrl } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 
 export default function JobInput() {
@@ -15,7 +16,7 @@ export default function JobInput() {
     if (!jdText) return;
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/parse-jd', { jdText });
+      const res = await axios.post(buildApiUrl('/parse-jd'), { jdText });
       setParsedData(res.data);
     } catch (error) {
       console.error('Error parsing JD:', error);
@@ -30,7 +31,7 @@ export default function JobInput() {
     if (!parsedData) return;
     setMatching(true);
     try {
-      const matchRes = await axios.post('http://localhost:5000/api/match-candidates', {
+      const matchRes = await axios.post(buildApiUrl('/match-candidates'), {
         ...parsedData,
         title: `Campaign for ${parsedData.roleTitle}`
       });

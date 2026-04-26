@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { buildApiUrl } from '../utils/api';
 import CandidateCard from '../components/CandidateCard';
 import ChatSimulation from '../components/ChatSimulation';
 
@@ -19,7 +20,7 @@ export default function CandidateRanking() {
 
   const fetchCandidates = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/campaigns/${campaignId}/results`);
+      const res = await axios.get(buildApiUrl(`/campaigns/${campaignId}/results`));
       setCandidates(res.data.candidates);
     } catch (error) {
       console.error('Error fetching candidates:', error);

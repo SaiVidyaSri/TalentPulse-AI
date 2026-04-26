@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Users, Target, Star, TrendingUp } from 'lucide-react';
 import axios from 'axios';
+import { buildApiUrl } from '../utils/api';
 import CandidateCard from '../components/CandidateCard';
 
 const COLORS = ['#6366f1', '#ec4899', '#06b6d4', '#f59e0b'];
@@ -14,7 +15,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchCandidates = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/campaigns/latest/results');
+        const res = await axios.get(buildApiUrl('/campaigns/latest/results'));
         setCandidates(res.data.candidates || []);
       } catch (error) {
         console.error('Error fetching candidates:', error);
