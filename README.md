@@ -234,5 +234,5 @@ Content-Type: application/json
 
 ## Links
 
-- **GitHub URL**: `<update-me>`
+- **GitHub URL**: `https://github.com/SaiVidyaSri/TalentPulse-AI`
 - **Deploy URL**: `<update-me>`
